@@ -15,7 +15,6 @@ class BaseCategoryClass(BaseClass):
         values.pop('id', None)
         query = category.insert().values(**values)
         item.id = await database.execute(query=query)
-        print(item)
         return item
 
     async def get_category(self, offset: int = 0, limit: int = 10) -> List[CategorySchemasId]:

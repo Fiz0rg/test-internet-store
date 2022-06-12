@@ -12,11 +12,11 @@ category_router = APIRouter()
 @category_router.post('/create', response_model=CategorySchemasId)
 async def create_category(cat: CategorySchemas,
                           base_class: BaseCategoryClass = Depends(category_repository)):
-    await base_class.create_category(cat=cat)
+    return await base_class.create_category(cat=cat)
 
 
 @category_router.get('/get', response_model=List[CategorySchemasId])
 async def get_category(offset: int = 0,
                        limit: int = 10,
                        base_class: BaseCategoryClass = Depends(category_repository)):
-    await base_class.get_category(offset, limit)
+    return await base_class.get_category(offset, limit)
