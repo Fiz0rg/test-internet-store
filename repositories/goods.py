@@ -13,7 +13,8 @@ class BaseGoodsClass(BaseClass):
 
         product = GoodsSchemasId(id=0,
                                  name=g.name,
-                                 description=g.description)
+                                 description=g.description,
+                                 category_id=g.category_id)
         values = {**product.dict()}
         values.pop('id', None)
         query = goods.insert().values(**values)

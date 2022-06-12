@@ -1,11 +1,13 @@
-import sqlalchemy
+from sqlalchemy import *
 
 from .database import metadata
 
-goods = sqlalchemy.Table(
+goods = Table(
     'goods',
     metadata,
-    sqlalchemy.Column('id', sqlalchemy.Integer, primary_key=True, autoincrement=True),
-    sqlalchemy.Column('name', sqlalchemy.String),
-    sqlalchemy.Column('description', sqlalchemy.String)
+    Column('id', Integer, primary_key=True, autoincrement=True),
+    Column('name', String),
+    Column('description', String),
+    Column('category_id', Integer, ForeignKey('category.id'))
 )
+

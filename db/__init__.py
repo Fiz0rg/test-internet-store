@@ -1,4 +1,5 @@
 from .goods import goods
+from .category import category
 
 from .database import metadata, engine
 

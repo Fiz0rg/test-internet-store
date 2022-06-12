@@ -6,12 +6,15 @@ class GoodsSchemas(BaseModel):
 
     name: str
     description: str
+    category_id: int
 
 
 class GoodsSchemasId(GoodsSchemas):
     """ Responce товара. """
 
     id: int
+
+
 
 
 
