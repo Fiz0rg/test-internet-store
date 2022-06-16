@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from db.database import database
 from endpoints.goods import goods_router
 from endpoints.category import category_router
+from endpoints.user import user_router
 
 app = FastAPI()
 
@@ -21,3 +22,4 @@ async def shutdown():
 
 app.include_router(goods_router, prefix="/goods", tags=['goods'])
 app.include_router(category_router, prefix="/category", tags=['category'])
+app.include_router(user_router, prefix="/user", tags=['user'])
