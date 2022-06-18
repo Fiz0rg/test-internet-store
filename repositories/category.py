@@ -19,5 +19,4 @@ class BaseCategoryClass(BaseClass):
 
     async def get_category(self, offset: int = 0, limit: int = 10) -> List[CategorySchemasId]:
         take_goods = category.select().offset(offset).limit(limit)
-        print(take_goods)
         return await database.fetch_all(take_goods)
