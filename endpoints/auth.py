@@ -15,18 +15,6 @@ from db.user import user
 auth_router = APIRouter()
 
 
-#
-# @auth_router.post('/login', response_model=Token)
-# async def login_for_access_token(login: GetUser, users: BaseUserClass = Depends(get_user_repository)):
-#     take_user = await users.get_user(login.username)
-#     if take_user is None or not verify_password(login.password, take_user.password):
-#         raise HTTPException(status_code=400, detail="incorrect username or password")
-#     return Token(
-#         access_token=create_access_token({"sub": take_user.username}),
-#         token_type="Bearer"
-#     )
-
-
 @auth_router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(),
                                  users: BaseUserClass = Depends(get_user_repository)):
