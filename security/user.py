@@ -40,7 +40,9 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
     return encoded_jwt
 
 
-def authenticate_user(db, username: str, password: str, hashed_password: str):
+def authenticate_user(username: str, password: str, hashed_password: str):
+    """ Валидация пользователя. """
+
     auth_user = GetUser(username=username, password=password)
     if not auth_user:
         return False
@@ -50,6 +52,8 @@ def authenticate_user(db, username: str, password: str, hashed_password: str):
 
 
 async def get_current_user(security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)):
+    """ Проверка на scopes, выдача прав."""
+
     if security_scopes:
         authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
     else:
@@ -80,4 +84,5 @@ async def get_current_user(security_scopes: SecurityScopes, token: str = Depends
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
+
     return current_user

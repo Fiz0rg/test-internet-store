@@ -8,8 +8,6 @@ class BaseGoodsClass(BaseClass):
     """ Обработка CRUD асинх функций для товаров. """
 
     async def create_goods(self, g: GoodsSchemas):
-        """ Создание товара. """
-
         product = GoodsSchemasId(id=0,
                                  name=g.name,
                                  description=g.description,
@@ -21,8 +19,6 @@ class BaseGoodsClass(BaseClass):
         return product
 
     async def get_goods(self, offset: int = 0, limit: int = 10):
-        """ Выборка товаров. """
-
         take_goods = goods.select().offset(offset).limit(limit)
         return await self.database.fetch_all(take_goods)
 
