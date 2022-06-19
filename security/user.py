@@ -1,16 +1,19 @@
 from datetime import timedelta, datetime
 
 from fastapi import Depends, HTTPException
+from pydantic import ValidationError
 from jose import jwt, JWTError
 from passlib.context import CryptContext
 from starlette import status
 
-from fastapi.security import  OAuth2PasswordBearer
+from fastapi.security import OAuth2PasswordBearer, SecurityScopes
 
 from schemas.auth import TokenData
 from schemas.user import GetUser, User
 
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth/token')
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl='auth/token',
+                                     scopes={"admin": "This scope allow you to add goods, categories",
+                                             "user": "Just users community"})
 
 SECRET_KEY = '09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7'
 ALGORITHM = 'HS256'
@@ -46,20 +49,33 @@ def authenticate_user(db, username: str, password: str, hashed_password: str):
     return auth_user
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)):
+    if security_scopes:
+        authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
+    else:
+        authenticate_value = f"Bearer"
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
+        headers={"WWW-Authenticate": authenticate_value},
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         username: str = payload.get("sub")
         if username is None:
             raise credentials_exception
-        token_data = TokenData(username=username)
-    except JWTError:
+        token_scopes = payload.get('scopes', [])
+        token_data = TokenData(token_scopes=token_scopes, username=username)
+    except (JWTError, ValidationError):
         raise credentials_exception
+    for scope in security_scopes.scopes:
+        if scope not in token_data.scopes:
+            if scope not in token_data.scopes:
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail="Not enough permissions",
+                    headers={"WWW-Authenticate": authenticate_value},
+                )
     return token_data
 
 

@@ -1,10 +1,12 @@
 from typing import List
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Security
 
 from schemas.goods import GoodsSchemas, GoodsSchemasId
 from repositories.goods import BaseGoodsClass
 from endpoints.depends import get_goods_repository
+from schemas.user import User
+from security.user import get_current_active_user
 
 goods_router = APIRouter()
 
@@ -13,6 +15,7 @@ goods_router = APIRouter()
 async def create_goods(
         g: GoodsSchemas,
         base_class: BaseGoodsClass = Depends(get_goods_repository),
+        current_user: User = Security(get_current_active_user, scopes=['admin'])
 ):
     return await base_class.create_goods(g=g)
 
