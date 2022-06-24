@@ -35,7 +35,7 @@ async def delete_goods(
         base_class: BaseGoodsClass = Depends(get_goods_repository)):
 
     not_found = HTTPException(status_code=404, detail=f"Item {name} not found")
-    item = await base_class.get_name(name)
+    item = await base_class.get_one(name)
     if item is None:
         return not_found
     result = await base_class.delete(name=name)

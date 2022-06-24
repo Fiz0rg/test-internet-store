@@ -1,5 +1,6 @@
-from db.database import database
+from fastapi import Depends
 
+from db.database import database
 from repositories.goods import BaseGoodsClass
 from repositories.category import BaseCategoryClass
 from repositories.user import BaseUserClass
@@ -21,5 +22,3 @@ def get_user_repository() -> BaseUserClass:
     """ Обращение к БД пользователей. """
 
     return BaseUserClass(database)
-
-

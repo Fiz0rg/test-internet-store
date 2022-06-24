@@ -1,17 +1,21 @@
 from typing import List
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Security
 
 from schemas.category import CategorySchemas, CategorySchemasId
 from repositories.category import BaseCategoryClass
 from endpoints.depends import category_repository
+from schemas.user import User
+from security.user import get_current_active_user
 
 category_router = APIRouter()
 
 
 @category_router.post('/create', response_model=CategorySchemasId)
 async def create_category(cat: CategorySchemas,
-                          base_class: BaseCategoryClass = Depends(category_repository)):
+                          base_class: BaseCategoryClass = Depends(category_repository),
+                          current_user: User = Security(get_current_active_user, scopes=['admin'])
+                          ):
     return await base_class.create_category(cat=cat)
 
 

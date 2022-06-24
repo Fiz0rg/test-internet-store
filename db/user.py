@@ -8,5 +8,6 @@ user = Table(
     Column("id", Integer, primary_key=True, unique=True, autoincrement=True),
     Column("username", String, index=True, unique=True),
     Column("email", String, unique=True, primary_key=True),
-    Column("password", String)
+    Column("password", String),
+    Column("goods_id", Integer, ForeignKey("goods.id"), nullable=True)
 )

@@ -22,12 +22,12 @@ class BaseGoodsClass(BaseClass):
         take_goods = goods.select().offset(offset).limit(limit)
         return await self.database.fetch_all(take_goods)
 
-    async def get_name(self, name: str):
+    async def get_one(self, name: str):
         query = goods.select().where(goods.c.name == name)
         item = await self.database.fetch_one(query=query)
         if item is None:
             return None
-        return GoodsSchemas.parse_obj(item)
+        return GoodsSchemasId.parse_obj(item)
 
     async def delete(self, name):
         query = goods.delete().where(goods.c.name == name)
