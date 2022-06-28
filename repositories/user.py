@@ -1,5 +1,5 @@
 from .base import BaseClass
-from schemas.user import UserId, UserPassword, UserWithGoods, TestGoods
+from schemas.user import UserId, UserPassword, TestGoods
 from security.user import hash_password
 from db.user import user
 
