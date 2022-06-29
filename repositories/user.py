@@ -1,5 +1,6 @@
+from schemas.goods import GoodsSchemas
 from .base import BaseClass
-from schemas.user import UserId, UserPassword, TestGoods
+from schemas.user import UserId, UserPassword, ABC
 from security.user import hash_password
 from db.user import user
 
@@ -24,13 +25,22 @@ class BaseUserClass(BaseClass):
         get_user = user.select().where(user.c.username == name)
         return await self.database.fetch_one(get_user)
 
-    async def add_goods(self, goods_id: int, username: str):
-        print(f'buy {goods_id}')
-        add = TestGoods(goods_id=goods_id,
-                        username=username)
-        print(f'add {add}')
-        values = {**add.dict()}
-        query = user.update().where(user.c.username == username).values(**values)
-        print(query)
-        await self.database.execute(query)
-        return add
+    # async def add_goods(self, goods: GoodsSchemas, username: str):
+    #     add = ABC(username=username,
+    #               goods=GoodsSchemas(name=goods.name,
+    #                                  description=goods.description,
+    #                                  category_id=goods.category_id))
+    #     values = {**add.dict()}
+    #     query = user.update().where(user.c.username == username).values(**values)
+    #     await self.database.execute(query)
+    #     return add
+
+    async def add_goods(self, item: GoodsSchemas, current_user: ABC):
+        copy_current_user = current_user
+        pydantic_copy_current_user = ABC(**copy_current_user)
+        print(pydantic_copy_current_user)
+        new_item = item.dict(exclude_unset=True)
+        pydantic_copy_current_user.goods.append(new_item)
+        updated_user = pydantic_copy_current_user.copy(update=new_item)
+        # await self.database.execute(query=updated_user)
+        return updated_user
