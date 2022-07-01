@@ -9,7 +9,7 @@ class User(BaseModel):
 
 
 class ABC(User):
-    goods: list[GoodsSchemas] = []
+    goods_id: list[int] = []
 
 
 class UserPassword(User):

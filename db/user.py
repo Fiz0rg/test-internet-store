@@ -12,7 +12,7 @@ class UserDB(Base):
     username = Column(String, unique=True)
     email = Column(String, unique=True)
     password = Column(String)
-    goods_id = Column(Integer, ForeignKey('goods.id'), nullable=True)
+    goods_id = Column(String, ForeignKey('goods.name'), nullable=True)
     goods = relationship("GoodsDB", back_populates="goods")
 
 
