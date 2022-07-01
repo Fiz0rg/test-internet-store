@@ -1,7 +1,8 @@
-from .goods import goods
 from .category import category
 from .user import user
+from .goods import goods
+from .basket import basket
 
-from .database import metadata, engine
+from .database import engine, Base
 
-metadata.create_all(engine)
+Base.metadata.create_all(engine)

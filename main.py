@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from db.database import database
+from endpoints.basket import basket_router
 from endpoints.goods import goods_router
 from endpoints.category import category_router
 from endpoints.user import user_router
@@ -25,3 +26,4 @@ app.include_router(auth_router, prefix="/auth", tags=['auth'])
 app.include_router(goods_router, prefix="/goods", tags=['goods'])
 app.include_router(category_router, prefix="/category", tags=['category'])
 app.include_router(user_router, prefix="/user", tags=['user'])
+app.include_router(basket_router, prefix="/basker", tags=['basker'])

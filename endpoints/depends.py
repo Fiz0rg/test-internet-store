@@ -1,6 +1,7 @@
 from fastapi import Depends
 
 from db.database import database
+from repositories.basket import BaseBasketClass
 from repositories.goods import BaseGoodsClass
 from repositories.category import BaseCategoryClass
 from repositories.user import BaseUserClass
@@ -22,3 +23,9 @@ def get_user_repository() -> BaseUserClass:
     """ Обращение к БД пользователей. """
 
     return BaseUserClass(database)
+
+
+def get_basket_repository() -> BaseBasketClass:
+    """ Обращение к БД корзины товаров. """
+
+    return BaseBasketClass(database)

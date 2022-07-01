@@ -1,10 +1,22 @@
 from sqlalchemy import *
-from .database import metadata
+
+from .database import Base
 
 
-category = Table(
-    'category',
-    metadata,
-    Column('id', Integer, primary_key=True, autoincrement=True),
-    Column('name', String, unique=True)
-)
+class CategoryDb(Base):
+    """ Model for caregories. """
+    __tablename__ = "category"
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String, unique=True)
+
+
+category = CategoryDb.__table__
+
+#
+# category = Table(
+#     'category',
+#     metadata,
+#     Column('id', Integer, primary_key=True, autoincrement=True),
+#     Column('name', String, unique=True)
+# )
