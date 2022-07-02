@@ -38,7 +38,7 @@ async def delete_goods(
     item = await base_class.get_one(name)
     if item is None:
         return not_found
-    result = await base_class.delete(name=name)
+    await base_class.delete(name=name)
     return {'status': 'ok'}
 
 

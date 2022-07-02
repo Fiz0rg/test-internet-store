@@ -1,3 +1,5 @@
+from typing import List
+
 import sqlalchemy
 from fastapi import HTTPException
 
@@ -9,7 +11,7 @@ from .base import BaseClass
 class BaseBasketClass(BaseClass):
     """ CRUD для модели корзины товаров. """
 
-    async def add_goods(self, user_id: int, goods_id: int):
+    async def add_goods(self, user_id: int, goods_id: int) -> BasketSchemaId:
         item = BasketSchemaId(id=0, user_id=user_id, goods_id=goods_id)
         values = {**item.dict()}
         values.pop("id", None)
@@ -17,7 +19,7 @@ class BaseBasketClass(BaseClass):
         item.id = await self.database.execute(query=query)
         return item
 
-    async def get_all_goods(self, offset: int, limit: int):
+    async def get_all_goods(self, offset: int, limit: int) -> List[BasketSchemaId]:
         query = basket.select().offset(offset).limit(limit)
         result = await self.database.fetch_all(query=query)
         if len(result) > 15:

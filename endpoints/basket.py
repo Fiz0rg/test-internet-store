@@ -29,7 +29,5 @@ async def add_goods(goods_name: str,
 @basket_router.get("/get_all_goods", response_model=List[BasketSchemaId])
 async def get_all_goods(offset: int = 0, limit: int = 15,
                         current_user: User = Security(get_current_active_user, scopes=["user"]),
-                        goods_db: BaseGoodsClass = Depends(get_goods_repository),
-                        basket_class: BaseBasketClass = Depends(get_basket_repository),
-                        users: BaseUserClass = Depends(get_user_repository)):
+                        basket_class: BaseBasketClass = Depends(get_basket_repository),):
     return await basket_class.get_all_goods(offset, limit)

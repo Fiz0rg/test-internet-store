@@ -23,4 +23,4 @@ async def create_category(cat: CategorySchemas,
 async def get_category(offset: int = 0,
                        limit: int = 10,
                        base_class: BaseCategoryClass = Depends(category_repository)):
-    return await base_class.get_category(offset, limit)
+    return await base_class.get_categories(offset, limit)

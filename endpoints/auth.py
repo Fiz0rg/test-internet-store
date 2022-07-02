@@ -6,7 +6,7 @@ from starlette import status
 
 from endpoints.depends import get_user_repository
 from schemas.auth import Token
-from schemas.user import GetUser, User
+from schemas.user import User
 from repositories.user import BaseUserClass
 from security.user import create_access_token, authenticate_user, ACCESS_TOKEN_EXPIRE_MINUTES, \
     get_current_active_user

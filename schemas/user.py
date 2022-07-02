@@ -8,6 +8,10 @@ class User(BaseModel):
     email: str | None = None
 
 
+class GetUserAndId(User):
+    id: int
+
+
 class ABC(User):
     goods_id: list[int] = []
 
@@ -45,4 +49,3 @@ class UserWithGoods(Goods):
 class GetUser(BaseModel):
     username: str
     password: str
-
