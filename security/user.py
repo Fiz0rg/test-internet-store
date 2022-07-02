@@ -26,6 +26,8 @@ def hash_password(password):
 
 
 def verify_password(plain_password, hashed_password):
+    """ Верификация\разшэширование пароля. """
+
     return pwd_context.verify(plain_password, hashed_password)
 
 
@@ -52,7 +54,8 @@ def authenticate_user(username: str, password: str, hashed_password: str):
 
 
 async def get_current_user(security_scopes: SecurityScopes, token: str = Depends(oauth2_scheme)):
-    """ Проверка на scopes, выдача прав."""
+    """ Проверка на scopes, выдача прав. Возвращает username и скопы. """
+
     if security_scopes:
         authenticate_value = f'Bearer scope="{security_scopes.scope_str}"'
     else:

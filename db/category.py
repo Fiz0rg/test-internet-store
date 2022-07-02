@@ -12,11 +12,3 @@ class CategoryDb(Base):
 
 
 category = CategoryDb.__table__
-
-#
-# category = Table(
-#     'category',
-#     metadata,
-#     Column('id', Integer, primary_key=True, autoincrement=True),
-#     Column('name', String, unique=True)
-# )

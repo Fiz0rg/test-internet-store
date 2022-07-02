@@ -1,5 +1,3 @@
-from fastapi import Depends
-
 from db.database import database
 from repositories.basket import BaseBasketClass
 from repositories.goods import BaseGoodsClass

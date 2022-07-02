@@ -1,3 +1,5 @@
+from typing import List
+
 from .base import BaseClass
 
 from schemas.goods import GoodsSchemas, GoodsSchemasId
@@ -7,7 +9,7 @@ from db.goods import goods
 class BaseGoodsClass(BaseClass):
     """ Обработка CRUD асинх функций для товаров. """
 
-    async def create_goods(self, g: GoodsSchemas):
+    async def create_goods(self, g: GoodsSchemas) -> GoodsSchemasId:
         product = GoodsSchemasId(id=0,
                                  name=g.name,
                                  description=g.description,
@@ -18,11 +20,11 @@ class BaseGoodsClass(BaseClass):
         product.id = await self.database.execute(query=query)
         return product
 
-    async def get_goods(self, offset: int = 0, limit: int = 10):
+    async def get_goods(self, offset: int = 0, limit: int = 10) -> List[GoodsSchemasId]:
         take_goods = goods.select().offset(offset).limit(limit)
         return await self.database.fetch_all(take_goods)
 
-    async def get_one(self, name: str):
+    async def get_one(self, name: str) -> GoodsSchemasId:
         query = goods.select().where(goods.c.name == name)
         item = await self.database.fetch_one(query=query)
         if item is None:
