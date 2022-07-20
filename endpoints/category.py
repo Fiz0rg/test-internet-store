@@ -14,7 +14,7 @@ category_router = APIRouter()
 @category_router.post('/create', response_model=CategorySchemasId)
 async def create_category(cat: CategorySchemas,
                           base_class: BaseCategoryClass = Depends(category_repository),
-                          current_user: User = Security(get_current_active_user, scopes=['admin'])
+                          # current_user: User = Security(get_current_active_user, scopes=['admin'])
                           ):
     return await base_class.create_category(cat=cat)
 

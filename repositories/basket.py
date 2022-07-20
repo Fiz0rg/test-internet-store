@@ -1,6 +1,5 @@
 from typing import List
 
-import sqlalchemy
 from fastapi import HTTPException
 
 from db.basket import basket

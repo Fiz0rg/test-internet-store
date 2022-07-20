@@ -1,11 +1,10 @@
-from fastapi import APIRouter, Depends, Security, HTTPException
+from fastapi import APIRouter, Depends, Security
 
-from repositories.basket import BaseBasketClass
-from repositories.goods import BaseGoodsClass
-from schemas.user import UserPassword, User, TestSchema, ABC, GetUserAndId
+
+from schemas.user import UserPassword, User, TestSchema, GetUserAndId
 from repositories.user import BaseUserClass
 from security.user import get_current_active_user
-from .depends import get_user_repository, get_goods_repository, get_basket_repository
+from .depends import get_user_repository
 
 user_router = APIRouter()
 
