@@ -1,6 +1,3 @@
-from typing import List
-
-from schemas.basket import BasketSchemaId
 from .base import BaseClass
 from schemas.user import UserId, UserPassword, GetUserAndId, TestSchema
 from security.user import hash_password

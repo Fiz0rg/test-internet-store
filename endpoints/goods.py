@@ -15,7 +15,7 @@ goods_router = APIRouter()
 async def create_goods(
         g: GoodsSchemas,
         base_class: BaseGoodsClass = Depends(get_goods_repository),
-        current_user: User = Security(get_current_active_user, scopes=['admin'])
+        # current_user: User = Security(get_current_active_user, scopes=['admin'])
 ):
     return await base_class.create_goods(g=g)
 
